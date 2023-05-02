@@ -7,3 +7,5 @@ We provide code and models for our experiments on CIFAR10, CIFAR100, and CUB:
 * Code for closed set recognition
 * Code for open set recognition
 * Code for generalized category discovery
+
+![image](public/image/20190528145810708.png)
