@@ -1,5 +1,5 @@
 # OpenGCD: Assisting Open World Recognition with Generalized Category Discovery
-A desirable open world recognition (OWR) system requires performing three tasks: (1) Open set recognition (OSR), i.e., classifying the known (classes seen during training) and rejecting the unknown (unseen$/$novel classes) online; (2) Grouping and labeling these unknown as novel known classes; (3) Incremental learning (IL), i.e., incrementally learning these novel classes and retaining the memory of old classes.
+A desirable open world recognition (OWR) system requires performing three tasks: (1) Open set recognition (OSR), i.e., classifying the known (classes seen during training) and rejecting the unknown (unseen/novel classes) online; (2) Grouping and labeling these unknown as novel known classes; (3) Incremental learning (IL), i.e., incrementally learning these novel classes and retaining the memory of old classes.
 
 ![image](https://github.com/Fulin-Gao/OpenGCD/blob/main/methods.png)
 
