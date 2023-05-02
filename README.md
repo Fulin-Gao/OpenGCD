@@ -11,3 +11,5 @@ We provide code and models for our experiments on CIFAR10, CIFAR100, and CUB:
 * Code for generalized category discovery
 
 You can download the model weights (dino_vitbase16_pretrain.pth) trained on ImageNet with DINO self-supervision at [ViT-B/16](https://github.com/facebookresearch/dino).
+
+You can run [feature extraction](https://github.com/sgvaze/generalized-category-discovery/blob/main/methods/clustering/extract_features.py) to get the feature embedding for each dataset.
