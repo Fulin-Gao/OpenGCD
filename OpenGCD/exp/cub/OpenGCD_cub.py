@@ -264,13 +264,3 @@ if __name__ == "__main__":
     model_csr3 = csr(train_feats_exemplar, test_feats_available, train_targets_exemplar, test_targets_available, num_known_class, cur_phase, args)
 
     print('Done!')
-
-
-    # acc = 0
-    # res = []
-    # for i in np.linspace(10000, 100000, num=1, endpoint=True):
-    #     predict_prob_osr, predict_label_osr, HNA, OSFM = osr_uncertainty(test_feats_csr1, test_targets_csr1, num_known_class, train_feats, train_targets, num_unknown_class, cur_phase, alpha=i, model=model_csr1)
-    #     if acc < OSFM:
-    #         acc = OSFM
-    #         res.append([i, ":", HNA, OSFM])
-    # print(res)
