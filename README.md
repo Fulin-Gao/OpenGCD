@@ -3,6 +3,12 @@ A desirable open world recognition (OWR) system requires performing three tasks:
 
 ![image](https://github.com/Fulin-Gao/OpenGCD/blob/main/methods.png)
 
+## Dependencies
+All dependencies are included in ```environment.yml```. To install, run
+```
+conda env create -f environment.yml
+```
+
 ## Code
 We provide code and models for our experiments on CIFAR10, CIFAR100, and CUB in ```OpenGCD```:
 * Code for our experiments in ```OpenGCD/exp```
