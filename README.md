@@ -11,6 +11,7 @@ conda env create -f environment.yml
 ```
 
 ### Data
+You can find the required data from the link below and place them according to the path shown in ```OpenGCD/config.py```.
 * [CIFAR-10, CIFAR-100](https://www.cs.toronto.edu/~kriz/cifar.html)
 * [CUB](https://www.vision.caltech.edu/datasets/cub_200_2011/)
 
