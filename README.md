@@ -18,7 +18,7 @@ conda env create -f environment.yml
 You can download the ViT weights (dino_vitbase16_pretrain.pth) trained on ImageNet with DINO self-supervision at [ViT-B/16](https://github.com/facebookresearch/dino).
 
 ### Features
-You can run [feature extraction](https://github.com/sgvaze/generalized-category-discovery/blob/main/methods/clustering/extract_features.py) to get the feature embedding for each dataset.
+You can run [extract_features.py](https://github.com/sgvaze/generalized-category-discovery/blob/main/methods/clustering/extract_features.py) to get the feature embedding for each dataset.
 
 ## Code
 We provide code and models for our experiments on CIFAR10, CIFAR100, and CUB in ```OpenGCD```:
