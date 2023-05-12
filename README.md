@@ -5,10 +5,10 @@ A desirable open world recognition (OWR) system requires performing three tasks:
 
 ## Code
 We provide code and models for our experiments on CIFAR10, CIFAR100, and CUB in ```OpenGCD/exp```:
-* Code for exemplar selection
-* Code for closed set recognition
-* Code for open set recognition
-* Code for generalized category discovery
+* Code for exemplar selection in ```OpenGCD/methods/```
+* Code for closed set recognition in ```OpenGCD/methods/```
+* Code for open set recognition in ```OpenGCD/methods/```
+* Code for generalized category discovery in ```OpenGCD/methods/```
 
 You can download the model weights (dino_vitbase16_pretrain.pth) trained on ImageNet with DINO self-supervision at [ViT-B/16](https://github.com/facebookresearch/dino).
 
