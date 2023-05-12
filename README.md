@@ -10,6 +10,10 @@ All dependencies are included in ```environment.yml```. To install, run
 conda env create -f environment.yml
 ```
 
+### Data
+* [CIFAR-10, CIFAR-100](https://www.cs.toronto.edu/~kriz/cifar.html)
+* [CUB](https://www.vision.caltech.edu/datasets/cub_200_2011/)
+
 ### Pretrained weights
 You can download the ViT weights (dino_vitbase16_pretrain.pth) trained on ImageNet with DINO self-supervision at [ViT-B/16](https://github.com/facebookresearch/dino).
 
