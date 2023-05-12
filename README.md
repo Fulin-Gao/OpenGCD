@@ -10,7 +10,7 @@ All dependencies are included in ```environment.yml```. To install, run
 conda env create -f environment.yml
 ```
 
-### Weights
+### Pretrained weights
 You can download the ViT weights (dino_vitbase16_pretrain.pth) trained on ImageNet with DINO self-supervision at [ViT-B/16](https://github.com/facebookresearch/dino).
 
 ### Features
