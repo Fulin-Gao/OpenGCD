@@ -4,7 +4,7 @@ A desirable open world recognition (OWR) system requires performing three tasks:
 ![image](https://github.com/Fulin-Gao/OpenGCD/blob/main/methods.png)
 
 ## Code
-We provide code and models for our experiments on CIFAR10, CIFAR100, and CUB:
+We provide code and models for our experiments on CIFAR10, CIFAR100, and CUB in ```OpenGCD/exp```:
 * Code for exemplar selection
 * Code for closed set recognition
 * Code for open set recognition
