@@ -63,7 +63,7 @@ def evaluation_closed(y_true, y_pred, phase, args):
     :param y_pred:  predicted label n*1
     :param phase:   current stage
     :param args:    various parameters
-    :print:         Accuracy, F1-Score, Confusion Matrix
+    :print:         Accuracy
     """
     print("Performing {} closed-set recognition evaluation".format(phase))
     stage_name = ['1st', '2nd', '3rd', '4th']
@@ -75,22 +75,10 @@ def evaluation_closed(y_true, y_pred, phase, args):
             condition = (args.class_splits[p-1] <= y_true) & (y_true < args.class_splits[p])
 
         acc = accuracy_score(y_true[condition], y_pred[condition])
-        f1 = f1_score(y_true[condition], y_pred[condition], average="weighted")
-        cm = confusion_matrix(y_true[condition], y_pred[condition])
-
         print("Accuracy on {} test set: {:.3f}".format(stage_name[p], acc))
-        print("F1-Score on {} test set: {:.3f}".format(stage_name[p], f1))
-        print("Confusion Matrix on {} test set: ".format(stage_name[p]))
-        print(cm)
 
     acc = accuracy_score(y_true, y_pred)
-    f1 = f1_score(y_true, y_pred, average="weighted")
-    cm = confusion_matrix(y_true, y_pred)
-
     print("Accuracy on all test set: {:.3f}".format(acc))
-    print("F1-Score on all test set: {:.3f}".format(f1))
-    print("Confusion Matrix on all test set: ")
-    print(cm)
 
 
 def evaluation_open(y_true, y_pred, phase):
@@ -98,19 +86,12 @@ def evaluation_open(y_true, y_pred, phase):
     :param y_true:     ground-true open-set label   n*1
     :param y_pred:     predicted open-set label     n*1
     :param phase:      current stage
-    :print:            HHA, OSFM, Confusion Matrix
+    :print:            HHA
     """
     print("Performing {} open-set recognition evaluation".format(phase))
-    cm = confusion_matrix(y_true, y_pred)
     HNA = metrics_HNA(y_pred, y_true, np.max(y_true))
-    OSFM = metrics_OSFM(cm)
-
     print("HNA: {:.3f}".format(HNA))
-    print("weighted OSFM: {:.3f}".format(OSFM))
-    print("Confusion Matrix: ")
-    print(cm)
-
-    return HNA, OSFM
+    return HNA, None
 
 
 def evaluation_novel(y_true, y_pred, phase, args):
@@ -142,6 +123,3 @@ def evaluation_novel(y_true, y_pred, phase, args):
         HCA = 2 / (1 / acc_seen + 1 / acc_novel)
 
     print("Harmonic clustering accuracy: {:.3f}".format(HCA))
-    print("Confusion Matrix: ")
-    cm = confusion_matrix(y_true, y_pred)
-    print(cm)
