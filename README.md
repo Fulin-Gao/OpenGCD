@@ -31,7 +31,7 @@ We provide code and models for our experiments on CIFAR10, CIFAR100, and CUB in 
 * Code for closed set recognition in ```OpenGCD/methods/closed_set_recognition```
 * Code for open set recognition in ```OpenGCD/methods/open_set_recognition```
 * Code for generalized category discovery in ```OpenGCD/methods/novel_category_discover```
-* Code for evaluation metrics (Harmonic normalized accuracy and Harmonic clustering accuracy) in ```OpenGCD/exp```
+* Code for evaluation metrics (Harmonic normalized accuracy and Harmonic clustering accuracy) in ```OpenGCD/project_utils/metrics.py```
 * Code for our experiments in ```OpenGCD/exp```
 
 
