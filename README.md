@@ -27,10 +27,11 @@ You can run [extract_features.py](https://github.com/sgvaze/generalized-category
 
 ## :rocket: Code
 We provide code and models for our experiments on CIFAR10, CIFAR100, and CUB in ```OpenGCD```:
-* Code for our experiments in ```OpenGCD/exp```
 * Code for exemplar selection in ```OpenGCD/methods/exemplars_selection```
 * Code for closed set recognition in ```OpenGCD/methods/closed_set_recognition```
 * Code for open set recognition in ```OpenGCD/methods/open_set_recognition```
 * Code for generalized category discovery in ```OpenGCD/methods/novel_category_discover```
+* Code for evaluation metrics (Harmonic normalized accuracy and Harmonic clustering accuracy) in ```OpenGCD/exp```
+* Code for our experiments in ```OpenGCD/exp```
 
 
