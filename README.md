@@ -1,4 +1,5 @@
 # OpenGCD: Assisting Open World Recognition with Generalized Category Discovery
+[![](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://www.python.org)
 [![](https://img.shields.io/badge/python-3.9-blue.svg?logo=python)](https://www.python.org)
 [![](https://img.shields.io/badge/PyTorch-1.13.1-red.svg?logo=pytorch)](https://pytorch.org)
 
