@@ -6,7 +6,7 @@ A desirable open world recognition (OWR) system requires performing three tasks:
 
 ![image](https://github.com/Fulin-Gao/OpenGCD/blob/main/methods.png)
 
-## Preparation
+## :fire: Preparation
 ### Dependencies
 All dependencies are included in ```environment.yml```. To install, run
 ```
@@ -24,7 +24,7 @@ You can download the ViT weights (dino_vitbase16_pretrain.pth) trained on ImageN
 ### Features
 You can run [extract_features.py](https://github.com/sgvaze/generalized-category-discovery/blob/main/methods/clustering/extract_features.py) to get the feature embedding for each dataset.
 
-## Code
+## :rocket: Code
 We provide code and models for our experiments on CIFAR10, CIFAR100, and CUB in ```OpenGCD```:
 * Code for our experiments in ```OpenGCD/exp```
 * Code for exemplar selection in ```OpenGCD/methods/exemplars_selection```
