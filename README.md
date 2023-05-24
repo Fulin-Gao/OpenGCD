@@ -34,4 +34,9 @@ We provide code and models for our experiments on CIFAR10, CIFAR100, and CUB in 
 * Code for evaluation metrics (Harmonic normalized accuracy and Harmonic clustering accuracy) in ```OpenGCD/project_utils/metrics.py```
 * Code for our experiments in ```OpenGCD/exp```
 
+## :bulb: Acknowledgement
+Our code is partially based on the following repositories:
+* [Generalized Category Discovery](https://github.com/sgvaze/generalized-category-discovery)
+* [A tool for Software Defect Prediction](https://github.com/afiore51/CNN_DS3_BugDetection/tree/master/Utils)
+
 
