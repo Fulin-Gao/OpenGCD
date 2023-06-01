@@ -1,6 +1,8 @@
 from methods.novel_category_discover.faster_mix_k_means_pytorch import K_Means as SemiSupKMeans
 from sklearn.metrics.cluster import davies_bouldin_score
 from sklearn.metrics.cluster import fowlkes_mallows_score
+from sklearn.metrics.cluster import silhouette_score
+from project_utils.cluster_utils import cluster_acc
 from scipy.optimize import minimize_scalar
 from functools import partial
 from sko.GA import GA
@@ -49,8 +51,8 @@ def ss_kmeans(labeled_feats, labeled_targets, unlabeled_feats, num_known_class, 
     unlabeled_pred = all_pred[mask == 2]
 
     # Evaluate clustering results
-    ACC = fowlkes_mallows_score(val_targets, val_pred)
-    DBS = davies_bouldin_score(unlabeled_feats, unlabeled_pred)
+    ACC = fowlkes_mallows_score(val_targets, val_pred)   # cluster_acc(val_targets, val_pred)
+    DBS = davies_bouldin_score(unlabeled_feats, unlabeled_pred)  # silhouette_score(unlabeled_feats, unlabeled_pred)
     return ACC, DBS
 
 
@@ -119,8 +121,8 @@ def ss_kmeans_for_search(K, labeled_feats, labeled_targets, unlabeled_feats, num
     unlabeled_pred = all_pred[mask == 2]
 
     # Evaluate clustering results
-    ACC = fowlkes_mallows_score(val_targets, val_pred)
-    DBS = davies_bouldin_score(unlabeled_feats, unlabeled_pred)
+    ACC = fowlkes_mallows_score(val_targets, val_pred)  # cluster_acc(val_targets, val_pred)
+    DBS = davies_bouldin_score(unlabeled_feats, unlabeled_pred)  # silhouette_score(unlabeled_feats, unlabeled_pred)
     return -(DBS+ACC)
 
 
