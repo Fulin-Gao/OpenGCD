@@ -20,7 +20,7 @@ if __name__ == "__main__":
             formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--batch_size', default=128, type=int)
     parser.add_argument('--num_workers', default=0, type=int)
-    parser.add_argument('--max_K', default=500, type=int, help='Maximum number of categories acceptable')
+    parser.add_argument('--max_K', default=110, type=int, help='Maximum number of categories acceptable')  # 500
     parser.add_argument('--root_dir', type=str, default=feature_extract_dir, help='Feature storage address')
     parser.add_argument('--semi_sup', type=str2bool, default=True)
     parser.add_argument('--max_kmeans_iter', type=int, default=20)
