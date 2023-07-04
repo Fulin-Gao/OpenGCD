@@ -259,6 +259,6 @@ if __name__ == "__main__":
     # 4th CLOSED-SET RECOGNITION
     # --------------------
     print('Performing {} closed-set recognition...'.format(cur_phase))
-    model_csr3 = csr(train_feats_exemplar, test_feats_available, train_targets_exemplar, test_targets_available, num_known_class, cur_phase, args)
+    model_csr4 = csr(train_feats_exemplar, test_feats_available, train_targets_exemplar, test_targets_available, num_known_class, cur_phase, args)
 
     print('Done!')
