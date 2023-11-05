@@ -6,7 +6,7 @@ import numpy as np
 
 def svm(x_train, y_train, x_test, model=None):
     if model is None:
-        clf = make_pipeline(StandardScaler(), SVC(probability=True))
+        clf = make_pipeline(StandardScaler(), SVC(probability=True))  # , gamma=15,
         clf.fit(x_train, y_train)
         pred_prob = clf.predict_proba(x_test)
         pred_label = np.argmax(pred_prob, axis=1)
