@@ -1,18 +1,19 @@
 from data.data_utils import MergedDataset
 
 from data.cifar import get_cifar_10_datasets, get_cifar_100_datasets
-# from data.herbarium_19 import get_herbarium_datasets
-# from data.stanford_cars import get_scars_datasets
-# from data.imagenet import get_imagenet_100_datasets
+from data.herbarium_19 import get_herbarium_datasets
+from data.stanford_cars import get_scars_datasets
+from data.imagenet import get_imagenet_100_datasets
+from data.imagenet import get_tinyimagenet_datasets
 from data.cub import get_cub_datasets
-# from data.fgvc_aircraft import get_aircraft_datasets
+from data.fgvc_aircraft import get_aircraft_datasets
 
 from data.cifar import subsample_classes as subsample_dataset_cifar
-# from data.herbarium_19 import subsample_classes as subsample_dataset_herb
-# from data.stanford_cars import subsample_classes as subsample_dataset_scars
-# from data.imagenet import subsample_classes as subsample_dataset_imagenet
+from data.herbarium_19 import subsample_classes as subsample_dataset_herb
+from data.stanford_cars import subsample_classes as subsample_dataset_scars
+from data.imagenet import subsample_classes as subsample_dataset_imagenet
 from data.cub import subsample_classes as subsample_dataset_cub
-# from data.fgvc_aircraft import subsample_classes as subsample_dataset_air
+from data.fgvc_aircraft import subsample_classes as subsample_dataset_air
 
 from copy import deepcopy
 import pickle
@@ -23,21 +24,23 @@ from config import osr_split_dir
 sub_sample_class_funcs = {
     'cifar10': subsample_dataset_cifar,
     'cifar100': subsample_dataset_cifar,
-    # 'imagenet_100': subsample_dataset_imagenet,
-    # 'herbarium_19': subsample_dataset_herb,
+    'imagenet_100': subsample_dataset_imagenet,
+    'tinyimagenet': subsample_dataset_imagenet,
+    'herbarium_19': subsample_dataset_herb,
     'cub': subsample_dataset_cub,
-    # 'aircraft': subsample_dataset_air,
-    # 'scars': subsample_dataset_scars
+    'aircraft': subsample_dataset_air,
+    'scars': subsample_dataset_scars
 }
 
 get_dataset_funcs = {
     'cifar10': get_cifar_10_datasets,
     'cifar100': get_cifar_100_datasets,
-    # 'imagenet_100': get_imagenet_100_datasets,
-    # 'herbarium_19': get_herbarium_datasets,
+    'imagenet_100': get_imagenet_100_datasets,
+    'tinyimagenet': get_tinyimagenet_datasets,
+    'herbarium_19': get_herbarium_datasets,
     'cub': get_cub_datasets,
-    # 'aircraft': get_aircraft_datasets,
-    # 'scars': get_scars_datasets
+    'aircraft': get_aircraft_datasets,
+    'scars': get_scars_datasets
 }
 
 

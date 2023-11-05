@@ -6,6 +6,7 @@ import os
 from copy import deepcopy
 from data.data_utils import subsample_instances
 from config import imagenet_root
+from config import tinyimagenet_root
 
 
 class ImageNetBase(torchvision.datasets.ImageFolder):
@@ -103,7 +104,7 @@ def get_imagenet_100_datasets(train_transform, test_transform, train_classes=ran
     np.random.seed(seed)
 
     # Subsample imagenet dataset initially to include 100 classes
-    subsampled_100_classes = np.random.choice(range(1000), size=(100,), replace=False)
+    subsampled_100_classes = np.random.choice(range(100), size=(100,), replace=False)
     subsampled_100_classes = np.sort(subsampled_100_classes)
     print(f'Constructing ImageNet-100 dataset from the following classes: {subsampled_100_classes.tolist()}')
     cls_map = {i: j for i, j in zip(subsampled_100_classes, range(100))}
@@ -136,6 +137,66 @@ def get_imagenet_100_datasets(train_transform, test_transform, train_classes=ran
     # Get test set for all classes
     test_dataset = ImageNetBase(root=os.path.join(imagenet_root, 'val'), transform=test_transform)
     test_dataset = subsample_classes(test_dataset, include_classes=subsampled_100_classes)
+
+    # Reset test set
+    test_dataset.samples = [(s[0], cls_map[s[1]]) for s in test_dataset.samples]
+    test_dataset.targets = [s[1] for s in test_dataset.samples]
+    test_dataset.uq_idxs = np.array(range(len(test_dataset)))
+    test_dataset.target_transform = None
+
+    # Either split train into train and val or use test set as val
+    train_dataset_labelled = train_dataset_labelled_split if split_train_val else train_dataset_labelled
+    val_dataset_labelled = val_dataset_labelled_split if split_train_val else None
+
+    all_datasets = {
+        'train_labelled': train_dataset_labelled,
+        'train_unlabelled': train_dataset_unlabelled,
+        'val': val_dataset_labelled,
+        'test': test_dataset,
+    }
+
+    return all_datasets
+
+
+def get_tinyimagenet_datasets(train_transform, test_transform, train_classes=range(100),
+                           prop_train_labels=0.5, split_train_val=False, seed=0):
+
+    np.random.seed(seed)
+
+    # Subsample imagenet dataset initially to include 100 classes
+    subsampled_200_classes = np.random.choice(range(200), size=(200,), replace=False)
+    subsampled_200_classes = np.sort(subsampled_200_classes)
+    print(f'Constructing TinyImageNet dataset from the following classes: {subsampled_200_classes.tolist()}')
+    cls_map = {i: j for i, j in zip(subsampled_200_classes, range(200))}
+
+    # Init entire training set
+    imagenet_training_set = ImageNetBase(root=os.path.join(tinyimagenet_root, 'train'), transform=train_transform)
+    whole_training_set = subsample_classes(imagenet_training_set, include_classes=subsampled_200_classes)
+
+    # Reset dataset
+    whole_training_set.samples = [(s[0], cls_map[s[1]]) for s in whole_training_set.samples]
+    whole_training_set.targets = [s[1] for s in whole_training_set.samples]
+    whole_training_set.uq_idxs = np.array(range(len(whole_training_set)))
+    whole_training_set.target_transform = None
+
+    # Get labelled training set which has subsampled classes, then subsample some indices from that
+    train_dataset_labelled = subsample_classes(deepcopy(whole_training_set), include_classes=train_classes)
+    subsample_indices = subsample_instances(train_dataset_labelled, prop_indices_to_subsample=prop_train_labels)
+    train_dataset_labelled = subsample_dataset(train_dataset_labelled, subsample_indices)
+
+    # Split into training and validation sets
+    train_idxs, val_idxs = get_train_val_indices(train_dataset_labelled)
+    train_dataset_labelled_split = subsample_dataset(deepcopy(train_dataset_labelled), train_idxs)
+    val_dataset_labelled_split = subsample_dataset(deepcopy(train_dataset_labelled), val_idxs)
+    val_dataset_labelled_split.transform = test_transform
+
+    # Get unlabelled data
+    unlabelled_indices = set(whole_training_set.uq_idxs) - set(train_dataset_labelled.uq_idxs)
+    train_dataset_unlabelled = subsample_dataset(deepcopy(whole_training_set), np.array(list(unlabelled_indices)))
+
+    # Get test set for all classes
+    test_dataset = ImageNetBase(root=os.path.join(tinyimagenet_root, 'val'), transform=test_transform)
+    test_dataset = subsample_classes(test_dataset, include_classes=subsampled_200_classes)
 
     # Reset test set
     test_dataset.samples = [(s[0], cls_map[s[1]]) for s in test_dataset.samples]
