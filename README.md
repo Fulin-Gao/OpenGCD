@@ -39,14 +39,3 @@ Our code is partially based on the following repositories:
 * [A tool for Software Defect Prediction](https://github.com/afiore51/CNN_DS3_BugDetection/tree/master)
 * [Generalized Category Discovery](https://github.com/sgvaze/generalized-category-discovery)
 * [AutoNovel: Automatically Discovering and Learning Novel Visual Categories](https://github.com/k-han/AutoNovel)
-
-## :beers: Citation
-If you find this repo useful for your research, please consider citing our paper:
-```
-@InProceedings{OpenGCD,
-  title={OpenGCD: Assisting Open World Recognition with Generalized Category Discovery},
-  author={Fulin, Gao and Weimin, Zhong and Zhixing, Cao and Xin, Peng and Zhi, Li},
-  journal={arXiv preprint arXiv:2308.06926},
-  year={2023}
-}
-```
