@@ -1,11 +1,12 @@
 from methods.novel_category_discover.faster_mix_k_means_pytorch import K_Means as SemiSupKMeans
-from sklearn.metrics.cluster import davies_bouldin_score
 from sklearn.metrics.cluster import fowlkes_mallows_score
+from sklearn.metrics.cluster import davies_bouldin_score
 from sklearn.metrics.cluster import silhouette_score
 from project_utils.cluster_utils import cluster_acc
 from scipy.optimize import minimize_scalar
 from functools import partial
 from sko.GA import GA
+from sko.DE import DE
 import numpy as np
 import torch
 import math
@@ -51,8 +52,8 @@ def ss_kmeans(labeled_feats, labeled_targets, unlabeled_feats, num_known_class, 
     unlabeled_pred = all_pred[mask == 2]
 
     # Evaluate clustering results
-    ACC = fowlkes_mallows_score(val_targets, val_pred)   # cluster_acc(val_targets, val_pred)
-    DBS = davies_bouldin_score(unlabeled_feats, unlabeled_pred)  # silhouette_score(unlabeled_feats, unlabeled_pred)
+    ACC = fowlkes_mallows_score(val_targets, val_pred)
+    DBS = davies_bouldin_score(unlabeled_feats, unlabeled_pred)
     return ACC, DBS
 
 
@@ -62,6 +63,7 @@ def estimate_k(labeled_feats, labeled_targets, unlabeled_feats, num_known_class,
     :param labeled_targets:      labeled data labels      n1*1
     :param unlabeled_feats:      unlabeled data features  n2*m
     :param num_known_class:      number of known classes
+    :param phase:                current phase
     :param args:                 various parameters
     :return:                     best total number of categories K
     """
@@ -121,15 +123,51 @@ def ss_kmeans_for_search(K, labeled_feats, labeled_targets, unlabeled_feats, num
     unlabeled_pred = all_pred[mask == 2]
 
     # Evaluate clustering results
-    ACC = fowlkes_mallows_score(val_targets, val_pred)  # cluster_acc(val_targets, val_pred)
-    DBS = davies_bouldin_score(unlabeled_feats, unlabeled_pred)  # silhouette_score(unlabeled_feats, unlabeled_pred)
-    return -(DBS+ACC)
+    ACC = fowlkes_mallows_score(val_targets, val_pred)  # fowlkes_mallows_score(val_targets, val_pred)  cluster_acc
+    DBS = davies_bouldin_score(unlabeled_feats, unlabeled_pred)  # davies_bouldin_score(unlabeled_feats, unlabeled_pred)  # silhouette_score
+    print('K:{:.2f}, ACC:{:.2f}, DBS:{:.2f}'.format(K, ACC, DBS))
+    print('-(DBS + 1 * ACC): ', -(DBS + 1 * ACC))
+    return -(DBS + 1 * ACC)  # -(DBS+ACC)  #  imagenet_100
 
 
 def estimate_k_bybrent(labeled_feats, labeled_targets, unlabeled_feats, num_known_class, phase, args):
+    """
+    :param labeled_feats:        labeled data features    n1*m
+    :param labeled_targets:      labeled data labels      n1*1
+    :param unlabeled_feats:      unlabeled data features  n2*m
+    :param num_known_class:      number of known classes
+    :param phase:                current phase
+    :param args:                 various parameters
+    :return:                     semi-supervised performance indicators average clustering accuracy (ACC) and Davies Bouldin score (DBS)
+    """
     test_k_means_partial = partial(ss_kmeans_for_search, labeled_feats=labeled_feats, labeled_targets=labeled_targets, unlabeled_feats=unlabeled_feats, num_known_class=num_known_class, args=args)
-    res = minimize_scalar(test_k_means_partial, bounds=(num_known_class+1, args.max_K), method='bounded', options={'disp': True}, tol=1)
+    res = minimize_scalar(test_k_means_partial, bounds=(num_known_class+1, args.max_K), method='bounded', options={'disp': True}, tol=200)  # 1
     best_k = int(res.x)
     print("The best K is {} for {}".format(best_k, phase))
     return best_k
 
+
+# def estimate_k_byGA(labeled_feats, labeled_targets, unlabeled_feats, num_known_class, phase, args):
+#     test_k_means_partial = partial(ss_kmeans_for_search, labeled_feats=labeled_feats, labeled_targets=labeled_targets, unlabeled_feats=unlabeled_feats, num_known_class=num_known_class, args=args)
+#     # ga = GA(func=test_k_means_partial, n_dim=1, size_pop=10, max_iter=3, lb=[num_known_class], ub=[args.max_K], precision=1)
+#     ga = DE(func=test_k_means_partial, n_dim=1, size_pop=30, max_iter=1, lb=[num_known_class], ub=[args.max_K],)  # cifar-100: 61 82 105
+#     best_x, best_y = ga.run()
+#     best_k = int(best_x[0])
+#     print("The best K is {} for {}".format(best_k, phase))
+#     return best_k
+
+
+# def estimate_k_byGA(labeled_feats, labeled_targets, unlabeled_feats, num_known_class, phase, args):
+#     recode_scores = []
+#     for k in np.arange(num_known_class, args.max_K):
+#         recode_scores.append(ss_kmeans_for_search(k, labeled_feats=labeled_feats, labeled_targets=labeled_targets, unlabeled_feats=unlabeled_feats, num_known_class=num_known_class, args=args))
+#
+#     import matplotlib
+#     import matplotlib.pyplot as plt
+#     matplotlib.use('TkAgg')
+#     plt.plot(np.arange(num_known_class, args.max_K), recode_scores, color="red")
+#     plt.show()
+#
+#     best_k = np.arange(num_known_class, args.max_K)[np.argmax(np.array(recode_scores))]
+#     print("The best K is {} for {}".format(best_k, phase))
+#     return best_k

@@ -1,5 +1,6 @@
 from project_utils.metrics import evaluation_closed
 from models.XGBoost import xgboost
+from models.Head import head
 from models.SVM import svm
 from models.MLP import mlp
 
@@ -28,6 +29,8 @@ def csr(train_feats, test_feats, train_targets, test_targets, num_known_class, p
         predict_prob_csr, predict_label_csr, model_csr = svm(train_feats_csr, train_targets_csr, test_feats_csr)
     elif args.classifier == 'MLP':
         predict_prob_csr, predict_label_csr, model_csr = mlp(train_feats_csr, train_targets_csr, test_feats_csr)
+    elif args.classifier == 'head':
+        predict_prob_csr, predict_label_csr, model_csr = head(train_feats_csr, train_targets_csr, test_feats_csr, num_known_class, args, phase='1st', model=None)
     else:
         raise NotImplementedError
 
