@@ -20,18 +20,18 @@ if __name__ == "__main__":
             formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--batch_size', default=128, type=int)
     parser.add_argument('--num_workers', default=0, type=int)
-    parser.add_argument('--max_K', default=10, type=int, help='Maximum number of categories acceptable')
+    parser.add_argument('--max_K', default=500, type=int, help='Maximum number of categories acceptable')
     parser.add_argument('--root_dir', type=str, default=feature_extract_dir, help='Feature storage address')
     parser.add_argument('--semi_sup', type=str2bool, default=True)
-    parser.add_argument('--max_kmeans_iter', type=int, default=20)
-    parser.add_argument('--k_means_init', type=int, default=6)
+    parser.add_argument('--max_kmeans_iter', type=int, default=200)
+    parser.add_argument('--k_means_init', type=int, default=100)
     parser.add_argument('--model_name', type=str, default='vit_dino', help='Format is {model_name}_{pretrain}')
     parser.add_argument('--dataset_name', type=str, default='cifar10', help='options: cifar10, cifar100, scars')
     parser.add_argument('--prop_train_labels', type=float, default=0.83, help='Percentage of training samples (5:1)')
     parser.add_argument('--eval_funcs', nargs='+', help='Which eval functions to use', default=['v1', 'v2'])
     parser.add_argument('--use_ssb_splits', type=str2bool, default=True)
     parser.add_argument('--class_splits', default=[4, 6, 8, 10], type=list, help='Split old and new classes')
-    parser.add_argument('--alpha', type=list, default=[10000, 10000, 10000], help='Adjusting for uncertainty')
+    parser.add_argument('--alpha', type=list, default=[100000, 100000, 100000], help='Adjusting for uncertainty')
     parser.add_argument('--reg', type=float, default=0.05, help='Penalty factor for DS3')
     parser.add_argument('--memory', type=int, default=20000, help='Buffer size')
     parser.add_argument('--classifier', type=str, default='XGBoost', help='options:{XGBoost, SVM}')
@@ -75,7 +75,7 @@ if __name__ == "__main__":
     # --------------------
     print('Performing {} exemplars selection...'.format(cur_phase))
     train_feats_exemplar, train_targets_exemplar = sampling_byDS3(train_feats_available, train_targets_available, num_known_class, args.reg,
-                                                                  math.ceil(args.memory / num_known_class), cur_phase)
+                                                                  math.ceil(args.memory / num_known_class), cur_phase, args)
 
     # --------------------
     # 1st CLOSED-SET RECOGNITION
@@ -88,8 +88,10 @@ if __name__ == "__main__":
     # --------------------
     print('Performing {} open-set recognition...'.format(cur_phase))
     num_unknown_class = args.class_splits[1] - num_known_class  # It is used only to fetch data and is unknown to the model
-    _, predict_label_osr, HNA, OSFM, unknown_feats, online_feats_osr, online_targets_osr = osr_uncertainty(test_feats_available, test_targets_available, test_feats, test_targets, train_feats, train_targets, num_known_class, num_unknown_class, cur_phase, args, alpha=args.alpha[0],
-                                                                     model=model_csr1)
+    _, predict_label_osr, HNA, OSFM, unknown_feats, online_feats_osr, online_targets_osr = osr_uncertainty(
+        test_feats_available, test_targets_available, test_feats, test_targets, train_feats, train_targets,
+        num_known_class, num_unknown_class, cur_phase, args, alpha=args.alpha[0],
+        model=model_csr1)
 
     # --------------------
     # 1st GENERALIZE NOVEL CATEGORY DISCOVERY
@@ -130,7 +132,7 @@ if __name__ == "__main__":
     # --------------------
     print('Performing {} exemplars selection...'.format(cur_phase))
     train_feats_exemplar, train_targets_exemplar = sampling_byDS3(train_feats_available, train_targets_available, num_known_class, args.reg,
-                                                                  math.ceil(args.memory / num_known_class), cur_phase)
+                                                                  math.ceil(args.memory / num_known_class), cur_phase, args, model_csr1)
 
     # --------------------
     # 2nd CLOSED-SET RECOGNITION
@@ -191,7 +193,7 @@ if __name__ == "__main__":
     # --------------------
     print('Performing {} exemplars selection...'.format(cur_phase))
     train_feats_exemplar, train_targets_exemplar = sampling_byDS3(train_feats_available, train_targets_available, num_known_class, args.reg,
-                                                                  math.ceil(args.memory / num_known_class), cur_phase)
+                                                                  math.ceil(args.memory / num_known_class), cur_phase, args, model_csr2)
 
     # --------------------
     # 3rd CLOSED-SET RECOGNITION
@@ -253,12 +255,13 @@ if __name__ == "__main__":
     print('Performing {} exemplars selection...'.format(cur_phase))
     # Making exemplars selections
     train_feats_exemplar, train_targets_exemplar = sampling_byDS3(train_feats_available, train_targets_available, num_known_class, args.reg,
-                                                                  math.ceil(args.memory / num_known_class), cur_phase)
+                                                                  math.ceil(args.memory / num_known_class), cur_phase, args, model_csr3)
 
     # --------------------
     # 4th CLOSED-SET RECOGNITION
     # --------------------
     print('Performing {} closed-set recognition...'.format(cur_phase))
-    model_csr4 = csr(train_feats_exemplar, test_feats_available, train_targets_exemplar, test_targets_available, num_known_class, cur_phase, args)
+    model_csr3 = csr(train_feats_exemplar, test_feats_available, train_targets_exemplar, test_targets_available, num_known_class, cur_phase, args)
 
     print('Done!')
+

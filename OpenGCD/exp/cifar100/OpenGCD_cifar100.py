@@ -11,30 +11,35 @@ from data.data_load import load_data
 import numpy as np
 import argparse
 import math
+import time
 import os
 
 
 if __name__ == "__main__":
+    T1 = time.time()
+
     parser = argparse.ArgumentParser(
             description='OpenGCD_cifar100',
             formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--batch_size', default=128, type=int)
+    parser.add_argument('--lr', default=1e-3, type=int)
+    parser.add_argument('--epochs', default=100, type=int)
     parser.add_argument('--num_workers', default=0, type=int)
-    parser.add_argument('--max_K', default=110, type=int, help='Maximum number of categories acceptable')  # 500
+    parser.add_argument('--max_K', default=500, type=int, help='Maximum number of categories acceptable')
     parser.add_argument('--root_dir', type=str, default=feature_extract_dir, help='Feature storage address')
     parser.add_argument('--semi_sup', type=str2bool, default=True)
-    parser.add_argument('--max_kmeans_iter', type=int, default=20)
-    parser.add_argument('--k_means_init', type=int, default=14)
+    parser.add_argument('--max_kmeans_iter', type=int, default=200)
+    parser.add_argument('--k_means_init', type=int, default=100)
     parser.add_argument('--model_name', type=str, default='vit_dino', help='Format is {model_name}_{pretrain}')
     parser.add_argument('--dataset_name', type=str, default='cifar100', help='options: cifar10, cifar100, scars')
     parser.add_argument('--prop_train_labels', type=float, default=0.83, help='Percentage of training samples (5:1)')
     parser.add_argument('--eval_funcs', nargs='+', help='Which eval functions to use', default=['v1', 'v2'])
     parser.add_argument('--use_ssb_splits', type=str2bool, default=True)
     parser.add_argument('--class_splits', default=[40, 60, 80, 100], type=list, help='Split old and new classes')
-    parser.add_argument('--alpha', type=list, default=[100000, 100000, 100000], help='Adjusting for uncertainty')
+    parser.add_argument('--alpha', type=list, default=[10, 10, 10], help='Adjusting for uncertainty')
     parser.add_argument('--reg', type=float, default=0.05, help='Penalty factor for DS3')
     parser.add_argument('--memory', type=int, default=20000, help='Buffer size')
-    parser.add_argument('--classifier', type=str, default='XGBoost', help='options:{XGBoost, SVM, MLP}')
+    parser.add_argument('--classifier', type=str, default='head', help='options:{XGBoost, SVM, MLP}')
 
     # ----------------------
     # INIT
@@ -75,7 +80,7 @@ if __name__ == "__main__":
     # --------------------
     print('Performing {} exemplars selection...'.format(cur_phase))
     train_feats_exemplar, train_targets_exemplar = sampling_byDS3(train_feats_available, train_targets_available, num_known_class, args.reg,
-                                                                  math.ceil(args.memory / num_known_class), cur_phase)
+                                                                  math.ceil(args.memory / num_known_class), cur_phase, args)
 
     # --------------------
     # 1st CLOSED-SET RECOGNITION
@@ -130,7 +135,7 @@ if __name__ == "__main__":
     # --------------------
     print('Performing {} exemplars selection...'.format(cur_phase))
     train_feats_exemplar, train_targets_exemplar = sampling_byDS3(train_feats_available, train_targets_available, num_known_class, args.reg,
-                                                                  math.ceil(args.memory / num_known_class), cur_phase)
+                                                                  math.ceil(args.memory / num_known_class), cur_phase, args)
 
     # --------------------
     # 2nd CLOSED-SET RECOGNITION
@@ -191,7 +196,7 @@ if __name__ == "__main__":
     # --------------------
     print('Performing {} exemplars selection...'.format(cur_phase))
     train_feats_exemplar, train_targets_exemplar = sampling_byDS3(train_feats_available, train_targets_available, num_known_class, args.reg,
-                                                                  math.ceil(args.memory / num_known_class), cur_phase)
+                                                                  math.ceil(args.memory / num_known_class), cur_phase, args)
 
     # --------------------
     # 3rd CLOSED-SET RECOGNITION
@@ -237,8 +242,6 @@ if __name__ == "__main__":
     test_feats_available = np.concatenate((test_feats_available, test_feats_novel), axis=0)
     test_targets_available = np.concatenate((test_targets_available, test_targets_novel))
 
-
-
     # --------------------
     # 4th PHASE
     # --------------------
@@ -255,12 +258,14 @@ if __name__ == "__main__":
     print('Performing {} exemplars selection...'.format(cur_phase))
     # Making exemplars selections
     train_feats_exemplar, train_targets_exemplar = sampling_byDS3(train_feats_available, train_targets_available, num_known_class, args.reg,
-                                                                  math.ceil(args.memory / num_known_class), cur_phase)
+                                                                  math.ceil(args.memory / num_known_class), cur_phase, args)
 
     # --------------------
     # 4th CLOSED-SET RECOGNITION
     # --------------------
     print('Performing {} closed-set recognition...'.format(cur_phase))
-    model_csr4 = csr(train_feats_exemplar, test_feats_available, train_targets_exemplar, test_targets_available, num_known_class, cur_phase, args)
+    model_csr3 = csr(train_feats_exemplar, test_feats_available, train_targets_exemplar, test_targets_available, num_known_class, cur_phase, args)
 
+    T2 = time.time()
+    print('程序运行时间:{}秒'.format(T2 - T1))
     print('Done!')
