@@ -38,7 +38,7 @@ if __name__ == "__main__":
     parser.add_argument('--class_splits', default=[40, 60, 80, 100], type=list, help='Split old and new classes')
     parser.add_argument('--alpha', type=list, default=[4, 1, 1], help='Adjusting for uncertainty')
     parser.add_argument('--reg', type=float, default=0.05, help='Penalty factor for DS3')
-    parser.add_argument('--memory', type=int, default=10000, help='Buffer size')
+    parser.add_argument('--memory', type=int, default=40000, help='Buffer size')
     parser.add_argument('--classifier', type=str, default='head', help='options:{XGBoost, SVM, MLP}')
 
     # ----------------------
