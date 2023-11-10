@@ -127,7 +127,7 @@ def ss_kmeans_for_search(K, labeled_feats, labeled_targets, unlabeled_feats, num
     DBS = davies_bouldin_score(unlabeled_feats, unlabeled_pred)  # davies_bouldin_score(unlabeled_feats, unlabeled_pred)  # silhouette_score
     print('K:{:.2f}, ACC:{:.2f}, DBS:{:.2f}'.format(K, ACC, DBS))
     print('-(DBS + 1 * ACC): ', -(DBS + 1 * ACC))
-    return -(DBS + 1 * ACC)  # -(DBS+ACC)  #  imagenet_100
+    return -(DBS + 1 * ACC)  
 
 
 def estimate_k_bybrent(labeled_feats, labeled_targets, unlabeled_feats, num_known_class, phase, args):
@@ -141,7 +141,7 @@ def estimate_k_bybrent(labeled_feats, labeled_targets, unlabeled_feats, num_know
     :return:                     semi-supervised performance indicators average clustering accuracy (ACC) and Davies Bouldin score (DBS)
     """
     test_k_means_partial = partial(ss_kmeans_for_search, labeled_feats=labeled_feats, labeled_targets=labeled_targets, unlabeled_feats=unlabeled_feats, num_known_class=num_known_class, args=args)
-    res = minimize_scalar(test_k_means_partial, bounds=(num_known_class+1, args.max_K), method='bounded', options={'disp': True}, tol=200)  # 1
+    res = minimize_scalar(test_k_means_partial, bounds=(num_known_class+1, args.max_K), method='bounded', options={'disp': True}, tol=1) 
     best_k = int(res.x)
     print("The best K is {} for {}".format(best_k, phase))
     return best_k
@@ -150,7 +150,7 @@ def estimate_k_bybrent(labeled_feats, labeled_targets, unlabeled_feats, num_know
 # def estimate_k_byGA(labeled_feats, labeled_targets, unlabeled_feats, num_known_class, phase, args):
 #     test_k_means_partial = partial(ss_kmeans_for_search, labeled_feats=labeled_feats, labeled_targets=labeled_targets, unlabeled_feats=unlabeled_feats, num_known_class=num_known_class, args=args)
 #     # ga = GA(func=test_k_means_partial, n_dim=1, size_pop=10, max_iter=3, lb=[num_known_class], ub=[args.max_K], precision=1)
-#     ga = DE(func=test_k_means_partial, n_dim=1, size_pop=30, max_iter=1, lb=[num_known_class], ub=[args.max_K],)  # cifar-100: 61 82 105
+#     ga = DE(func=test_k_means_partial, n_dim=1, size_pop=30, max_iter=1, lb=[num_known_class], ub=[args.max_K],) 
 #     best_x, best_y = ga.run()
 #     best_k = int(best_x[0])
 #     print("The best K is {} for {}".format(best_k, phase))
