@@ -69,7 +69,7 @@ def mic(train_feats_exemplar, train_targets_exemplar, num_known_class):
 
         # map nmi to (0.5, 1]
         mi_c = mis_c[:, c]
-        mi_c_norm = map01_to_ab(0.5+1e-2, 1, mi_c)  # 0.99
+        mi_c_norm = map01_to_ab(0.5+1e-2, 1, mi_c)
         nmi_norm[condition] = mi_c_norm
 
     # Assigning soft labels
