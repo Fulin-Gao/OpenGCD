@@ -87,7 +87,7 @@ def sampling_byDS3(all_known_feats, all_known_targets, num_known_class, r, k, ph
             condition = all_known_targets == c
             c_known_feats = all_known_feats[condition]
             p = np.mean(c_known_feats, axis=0)
-            mi = distance_matrix(c_known_feats, p.reshape(1, -1))  # mutual_info_regression(c_known_feats.T, p)  #
+            mi = mutual_info_regression(c_known_feats.T, p)
             mis_c.append(np.mean(mi))
 
         # Allocate memory
