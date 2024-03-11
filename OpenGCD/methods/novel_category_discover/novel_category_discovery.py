@@ -25,7 +25,7 @@ def gncd(train_feats_exemplar, train_targets_exemplar, unknown_feats, predict_la
 
     # Estimate total number of classes K
     print('Estimating the total number of classes K')
-    best_K = estimate_k_bybrent(labeled_feats, labeled_targets, unlabeled_feats, num_known_class, phase, args)  # estimate_k_bybrent
+    best_K = estimate_k_bybrent(labeled_feats, labeled_targets, unlabeled_feats, num_known_class, phase, args) 
 
     # Perform semi-supervised k-means clustering based on the best K
     print('Performing semi-supervised k-means by best K={}'.format(best_K))
@@ -47,7 +47,7 @@ def gncd(train_feats_exemplar, train_targets_exemplar, unknown_feats, predict_la
     predict_label_osr[predict_label_osr == num_known_class] = unlabeled_pred
 
     # Evaluate generalized novel category discovery results
-    #
+    
     evaluation_novel(online_targets_osr, predict_label_osr, phase, args)
 
     return predict_label_osr
