@@ -126,8 +126,8 @@ def ss_kmeans_for_search(K, labeled_feats, labeled_targets, unlabeled_feats, num
     ACC = fowlkes_mallows_score(val_targets, val_pred)  # fowlkes_mallows_score(val_targets, val_pred)  cluster_acc
     DBS = davies_bouldin_score(unlabeled_feats, unlabeled_pred)  # davies_bouldin_score(unlabeled_feats, unlabeled_pred)  # silhouette_score
     print('K:{:.2f}, ACC:{:.2f}, DBS:{:.2f}'.format(K, ACC, DBS))
-    print('-(DBS + 1 * ACC): ', -(DBS + 1 * ACC))
-    return -(DBS + 1 * ACC)  
+    print('-(DBS + ACC): ', -(DBS + 1 * ACC))
+    return -(DBS + ACC)  
 
 
 def estimate_k_bybrent(labeled_feats, labeled_targets, unlabeled_feats, num_known_class, phase, args):
