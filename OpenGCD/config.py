@@ -1,7 +1,7 @@
 # -----------------
 # DATASET ROOTS
 # -----------------
-cifar_10_root = '/home/Downloads/generalized-category-discovery-main/datasets/cifar10'
+cifar_10_root = '/home/Downloads/generalized-category-discovery-main/datasets/cifar10'   # It needs to be replaced with your own path.
 cifar_100_root = '/home/Downloads/generalized-category-discovery-main/datasets/cifar100'
 cub_root = '/home/Downloads/generalized-category-discovery-main/datasets/CUB'
 
