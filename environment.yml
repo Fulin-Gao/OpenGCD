@@ -3,7 +3,7 @@ channels:
   - anaconda
   - pytorch
   - http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/bioconda
-  - nvidia
+  - nvidi
   - http://mirrors.ustc.edu.cn/anaconda/pkgs/free
   - http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
   - http://mirrors.ustc.edu.cn/anaconda/pkgs/free/
