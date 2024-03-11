@@ -67,21 +67,3 @@ def osr_uncertainty(test_feats_csr, test_targets_csr, test_feats, test_targets, 
     unknown_feats = online_feats_osr[label_ass == num_known_class]
 
     return prob_ass, label_ass, HNA, OSFM, unknown_feats, online_feats_osr, online_targets_osr1
-
-
-def metrics_OpenAUC(x1, x2, pred, labels):
-    """
-    :param x1: open set score for each known class sample (B_k,)
-    :param x2: open set score for each unknown class sample (B_u,)
-    :param pred: predicted class for each known class sample (B_k,)
-    :param labels: correct class for each known class sample (B_k,)
-    :return: Open Set Classification Rate
-    """
-    from sklearn.metrics import roc_auc_score
-    x1, x2, correct = x1.tolist(), x2.tolist(), (pred == labels).tolist()
-    m_x2 = max(x2) + 1e-5
-    y_score = [value if hit else m_x2 for value, hit in zip(x1, correct)] + x2
-    y_true = [0] * len(x1) + [1] * len(x2)
-    open_auc = roc_auc_score(y_true, y_score)
-    print('OpenAUC:', open_auc)
-    return open_auc
