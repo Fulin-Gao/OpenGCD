@@ -123,24 +123,6 @@ def evaluation_novel(y_true, y_pred, phase, args):
     :print:              clustering accuracy on old, new, all classes
     """
 
-    # previous metric
-    # ind_new = ind[ind[:,-1] >= num_class_seen]
-    # acc_new = sum([w[i, j] for i, j in ind_new]) * 1.0 / y_pred[y_ture >= num_class_seen].size
-    #
-    # stage_name = ['1st', '2nd', '3rd', '4th']
-    # for p in range(int(phase[0])):
-    #     if p == 0:
-    #         condition = y_ture < args.class_splits[p]
-    #         ind_old = ind[ind[:, -1] < args.class_splits[p]]
-    #     else:
-    #         condition = (args.class_splits[p-1] <= y_ture) & (y_ture < args.class_splits[p])
-    #         ind_old = ind[(args.class_splits[p-1] <= ind[:, -1]) & (ind[:, -1] < args.class_splits[p])]
-    #
-    #     acc_old = sum([w[i, j] for i, j in ind_old]) * 1.0 / y_pred[condition].size
-    #     print("Clustering accuracy on {} test set from seen classes: {:.3f}".format(stage_name[p], acc_old))
-    #
-    # print("Clustering accuracy on new classes: {:.3f}".format(acc_new))
-
     print("Performing {} generalized novel category discovery evaluation".format(phase))
     num_class_seen = args.class_splits[int(phase[0])-1]
 
