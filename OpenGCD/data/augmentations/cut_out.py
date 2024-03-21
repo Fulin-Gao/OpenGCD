@@ -1,7 +1,3 @@
-"""
-https://github.com/hysts/pytorch_cutout
-"""
-
 import torch
 import numpy as np
 
