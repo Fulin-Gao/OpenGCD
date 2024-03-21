@@ -123,8 +123,8 @@ def ss_kmeans_for_search(K, labeled_feats, labeled_targets, unlabeled_feats, num
     unlabeled_pred = all_pred[mask == 2]
 
     # Evaluate clustering results
-    ACC = fowlkes_mallows_score(val_targets, val_pred)  # fowlkes_mallows_score(val_targets, val_pred)  cluster_acc
-    DBS = davies_bouldin_score(unlabeled_feats, unlabeled_pred)  # davies_bouldin_score(unlabeled_feats, unlabeled_pred)  # silhouette_score
+    ACC = fowlkes_mallows_score(val_targets, val_pred) 
+    DBS = davies_bouldin_score(unlabeled_feats, unlabeled_pred) 
     print('K:{:.2f}, ACC:{:.2f}, DBS:{:.2f}'.format(K, ACC, DBS))
     print('-(DBS + ACC): ', -(DBS + 1 * ACC))
     return -(DBS + ACC)  
