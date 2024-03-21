@@ -1,7 +1,3 @@
-"""
-https://github.com/ildoonet/pytorch-randaugment/blob/master/RandAugment/augmentations.py
-"""
-
 import random
 
 import PIL, PIL.ImageOps, PIL.ImageEnhance, PIL.ImageDraw
