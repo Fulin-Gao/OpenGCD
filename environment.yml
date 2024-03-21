@@ -2,14 +2,7 @@ name: base
 channels:
   - anaconda
   - pytorch
-  - http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/bioconda
   - nvidia
-  - http://mirrors.ustc.edu.cn/anaconda/pkgs/free
-  - http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
-  - http://mirrors.ustc.edu.cn/anaconda/pkgs/free/
-  - http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/bioconda/
-  - http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
-  - defaults
 dependencies:
   - _libgcc_mutex=0.1=main
   - _openmp_mutex=5.1=1_gnu
