@@ -42,8 +42,6 @@ def find_classes(classes_file):
 
 class FGVCAircraft(Dataset):
 
-    """`FGVC-Aircraft <http://www.robots.ox.ac.uk/~vgg/data/fgvc-aircraft>`_ Dataset.
-
     Args:
         root (string): Root directory path to dataset.
         class_type (string, optional): The level of FGVC-Aircraft fine-grain classification
