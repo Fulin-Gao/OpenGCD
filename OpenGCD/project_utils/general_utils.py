@@ -59,8 +59,7 @@ def strip_state_dict(state_dict, strip_key='module.'):
 def get_dino_head_weights(pretrain_path):
 
     """
-    :param pretrain_path: Path to full DINO pretrained checkpoint as in https://github.com/facebookresearch/dino
-     'full_ckpt'
+    :param pretrain_path: Path to full DINO pretrained checkpoint
     :return: weights only for the projection head
     """
 
@@ -281,7 +280,7 @@ class ClassificationPredSaver(object):
 def get_acc_auroc_curves(logdir):
 
     """
-    :param logdir: Path to logs: E.g '/work/sagar/open_set_recognition/methods/ARPL/log/(12.03.2021_|_32.570)/'
+    :param logdir: Path to logs
     :return:
     """
 
