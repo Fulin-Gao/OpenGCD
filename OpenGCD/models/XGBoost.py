@@ -18,8 +18,8 @@ def xgboost(x_train, y_train, x_test, y_test, num_classes, plot=False, model=Non
     """
 
     if model is None:
-        param = {'objective': 'multi:softprob', 'num_class': num_classes, 'eta': 1, 'max_depth': 10}  # cifar: 1-10  cub: 0.1-10
-        num_round = 5  # cifar: 50  cub: 50
+        param = {'objective': 'multi:softprob', 'num_class': num_classes, 'eta': 1, 'max_depth': 10}  
+        num_round = 5  
         xg_train = xgb.DMatrix(x_train, label=y_train)
         xg_test = xgb.DMatrix(x_test, label=y_test)
         watchlist = [(xg_train, 'train')]
