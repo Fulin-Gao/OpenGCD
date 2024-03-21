@@ -164,11 +164,6 @@ class ADMM(object):
         """
         This function solves the proposed trace minimization regularized by row-sparsity norm using an ADMM framework
 
-        To know more about this, please read :
-        Dissimilarity-based Sparse Subset Selection
-        by Ehsan Elhamifar, Guillermo Sapiro, and S. Shankar Sastry
-        https://arxiv.org/pdf/1407.6810.pdf
-
         :param dis_matrix:      dissimilarity matrix.
         :param p:               norm of the mixed L1/Lp regularizer, {2,inf}
 
