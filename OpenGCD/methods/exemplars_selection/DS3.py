@@ -1,7 +1,3 @@
-"""
-This file contains the implementation of 'Dissimilarity-based Sparse Subset Selection' algorithm using different
-types of optimization techniques such as, message passing, greedy algorithm, and ADMM.
-"""
 from methods.exemplars_selection.ADMM import ADMM
 from numpy import linalg as LA
 import numpy as np
@@ -78,11 +74,6 @@ class DS3(object):
         This function finds the subset of the data that can represent it as closely as possible given the
         regularization parameter. It uses 'alternating direction methods of multipliers' (ADMM) algorithm to
         solve the objective function for this problem, which is similar to the popular 'facility location problem'.
-
-        To know more about this, please read :
-        Dissimilarity-based Sparse Subset Selection
-        by Ehsan Elhamifar, Guillermo Sapiro, and S. Shankar Sastry
-        https://arxiv.org/pdf/1407.6810.pdf
 
         :param mu:        penalty parameter.
         :param epsilon:   small value to check for convergence.
