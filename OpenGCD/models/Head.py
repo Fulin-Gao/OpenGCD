@@ -20,11 +20,6 @@ def DNN(x_train, y_train, num_known_classes, args):
     mixed_x = tf.convert_to_tensor(mixed_x[idx])
     mixed_y = tf.convert_to_tensor(mixed_y[idx])
 
-    # idx = np.random.permutation(len(y_train))
-    # mixed_x = np.expand_dims(x_train, -1)
-    # mixed_x = tf.convert_to_tensor(mixed_x[idx])
-    # mixed_y = tf.one_hot(y_train[idx], depth=num_known_classes)
-
     # creating model
     input_shape = mixed_x.shape[1:]
     model = tf.keras.Sequential(
