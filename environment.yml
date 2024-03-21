@@ -319,4 +319,3 @@ dependencies:
       - xgboost==1.7.5
       - xlrd==2.0.1
       - zipp==3.15.0
-prefix: /home/fulin/anaconda3/envs/pytorch
