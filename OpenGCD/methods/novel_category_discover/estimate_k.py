@@ -33,7 +33,7 @@ def ss_kmeans(labeled_feats, labeled_targets, unlabeled_feats, num_known_class, 
 
     # Merge validation probe set and unknown unlabeled data
     u_feats = np.concatenate((val_feats, unlabeled_feats), axis=0)
-    mask = np.concatenate((mask_probe, 2 * np.ones(unlabeled_feats.shape[0], dtype=int)))  # {anchor:0, validation:1, unknown unlabeled:2}
+    mask = np.concatenate((mask_probe, 2 * np.ones(unlabeled_feats.shape[0], dtype=int))) 
 
     # Perform semi-supervised k-means clustering
     print('Performing semi-supervised k-means (k={})'.format(K))
@@ -94,7 +94,7 @@ def ss_kmeans_for_search(K, labeled_feats, labeled_targets, unlabeled_feats, num
     """
     # Split labeled data into an anchor probe set and a validation probe set (2:1)
     num_class_anchor = math.ceil(2 * num_known_class / 3)
-    mask_probe = np.zeros(len(labeled_targets), dtype=int)  # {anchor:0, validation:1}
+    mask_probe = np.zeros(len(labeled_targets), dtype=int) 
     mask_probe[labeled_targets >= num_class_anchor] = 1
     anchor_feats = labeled_feats[mask_probe == 0]
     val_feats = labeled_feats[mask_probe == 1]
@@ -103,7 +103,7 @@ def ss_kmeans_for_search(K, labeled_feats, labeled_targets, unlabeled_feats, num
 
     # Merge validation probe set and unknown unlabeled data
     u_feats = np.concatenate((val_feats, unlabeled_feats), axis=0)
-    mask = np.concatenate((mask_probe, 2 * np.ones(unlabeled_feats.shape[0], dtype=int)))  # {anchor:0, validation:1, unknown unlabeled:2}
+    mask = np.concatenate((mask_probe, 2 * np.ones(unlabeled_feats.shape[0], dtype=int)))
 
     # Perform semi-supervised k-means clustering
     K = int(K)
@@ -145,29 +145,3 @@ def estimate_k_bybrent(labeled_feats, labeled_targets, unlabeled_feats, num_know
     best_k = int(res.x)
     print("The best K is {} for {}".format(best_k, phase))
     return best_k
-
-
-# def estimate_k_byGA(labeled_feats, labeled_targets, unlabeled_feats, num_known_class, phase, args):
-#     test_k_means_partial = partial(ss_kmeans_for_search, labeled_feats=labeled_feats, labeled_targets=labeled_targets, unlabeled_feats=unlabeled_feats, num_known_class=num_known_class, args=args)
-#     # ga = GA(func=test_k_means_partial, n_dim=1, size_pop=10, max_iter=3, lb=[num_known_class], ub=[args.max_K], precision=1)
-#     ga = DE(func=test_k_means_partial, n_dim=1, size_pop=30, max_iter=1, lb=[num_known_class], ub=[args.max_K],) 
-#     best_x, best_y = ga.run()
-#     best_k = int(best_x[0])
-#     print("The best K is {} for {}".format(best_k, phase))
-#     return best_k
-
-
-# def estimate_k_byGA(labeled_feats, labeled_targets, unlabeled_feats, num_known_class, phase, args):
-#     recode_scores = []
-#     for k in np.arange(num_known_class, args.max_K):
-#         recode_scores.append(ss_kmeans_for_search(k, labeled_feats=labeled_feats, labeled_targets=labeled_targets, unlabeled_feats=unlabeled_feats, num_known_class=num_known_class, args=args))
-#
-#     import matplotlib
-#     import matplotlib.pyplot as plt
-#     matplotlib.use('TkAgg')
-#     plt.plot(np.arange(num_known_class, args.max_K), recode_scores, color="red")
-#     plt.show()
-#
-#     best_k = np.arange(num_known_class, args.max_K)[np.argmax(np.array(recode_scores))]
-#     print("The best K is {} for {}".format(best_k, phase))
-#     return best_k
