@@ -157,28 +157,6 @@ def Identity(img, v):
 
 
 def augment_list():  # 16 oeprations and their ranges
-    # https://github.com/google-research/uda/blob/master/image/randaugment/policies.py#L57
-    # l = [
-    #     (Identity, 0., 1.0),
-    #     (ShearX, 0., 0.3),  # 0
-    #     (ShearY, 0., 0.3),  # 1
-    #     (TranslateX, 0., 0.33),  # 2
-    #     (TranslateY, 0., 0.33),  # 3
-    #     (Rotate, 0, 30),  # 4
-    #     (AutoContrast, 0, 1),  # 5
-    #     (Invert, 0, 1),  # 6
-    #     (Equalize, 0, 1),  # 7
-    #     (Solarize, 0, 110),  # 8
-    #     (Posterize, 4, 8),  # 9
-    #     # (Contrast, 0.1, 1.9),  # 10
-    #     (Color, 0.1, 1.9),  # 11
-    #     (Brightness, 0.1, 1.9),  # 12
-    #     (Sharpness, 0.1, 1.9),  # 13
-    #     # (Cutout, 0, 0.2),  # 14
-    #     # (SamplePairing(imgs), 0, 0.4),  # 15
-    # ]
-
-    # https://github.com/tensorflow/tpu/blob/8462d083dd89489a79e3200bcc8d4063bf362186/models/official/efficientnet/autoaugment.py#L505
     l = [
         (AutoContrast, 0, 1),
         (Equalize, 0, 1),
@@ -201,8 +179,6 @@ def augment_list():  # 16 oeprations and their ranges
     return l
 
 def augment_list_svhn():  # 16 oeprations and their ranges
-
-    # https://github.com/tensorflow/tpu/blob/8462d083dd89489a79e3200bcc8d4063bf362186/models/official/efficientnet/autoaugment.py#L505
     l = [
         (AutoContrast, 0, 1),
         (Equalize, 0, 1),
@@ -244,9 +220,6 @@ class Lighting(object):
 
 
 class CutoutDefault(object):
-    """
-    Reference : https://github.com/quark0/darts/blob/master/cnn/utils.py
-    """
     def __init__(self, length):
         self.length = length
 
