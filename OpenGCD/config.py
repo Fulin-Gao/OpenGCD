@@ -1,15 +1,15 @@
 # -----------------
 # DATASET ROOTS
 # -----------------
-cifar_10_root = '/home/Downloads/generalized-category-discovery-main/datasets/cifar10'   # It needs to be replaced with your own path.
-cifar_100_root = '/home/Downloads/generalized-category-discovery-main/datasets/cifar100'
-cub_root = '/home/Downloads/generalized-category-discovery-main/datasets/CUB'
+cifar_10_root = '.../datasets/cifar10'   # It needs to be replaced with your own path.
+cifar_100_root = '.../datasets/cifar100'
+cub_root = '.../datasets/CUB'
 
 # OSR Split dir
-osr_split_dir = '/home/Downloads/generalized-category-discovery-main/data/ssb_splits'
+osr_split_dir = '.../data/ssb_splits'
 
 # -----------------
 # OTHER PATHS
 # -----------------
-dino_pretrain_path = '/home/Downloads/generalized-category-discovery-main/dino_vitbase16_pretrain.pth'
-feature_extract_dir = '/home/Downloads/generalized-category-discovery-main/features'  # Extract features to this directory
+dino_pretrain_path = '.../dino_vitbase16_pretrain.pth'
+feature_extract_dir = '.../features'  # Extract features to this directory
