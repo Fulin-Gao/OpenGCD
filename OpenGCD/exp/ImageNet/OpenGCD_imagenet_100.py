@@ -107,7 +107,7 @@ if __name__ == "__main__":
     # --------------------
     # Fetch new cluster data
     mask_novel = np.zeros(len(predict_label_ncd)) != 0
-    mask_novel[len(test_targets_available):] = predict_label_ncd[len(test_targets_available):] >= 0  # num_known_class
+    mask_novel[len(test_targets_available):] = predict_label_ncd[len(test_targets_available):] >= 0 
 
     # Handle the novel cluster manually
     feats_novel = online_feats_osr[mask_novel]
@@ -223,7 +223,7 @@ if __name__ == "__main__":
     # --------------------
     # Fetch new cluster data
     mask_novel = np.zeros(len(predict_label_ncd)) != 0
-    mask_novel[len(test_targets_available):] = predict_label_ncd[len(test_targets_available):] >= 0 # num_known_class
+    mask_novel[len(test_targets_available):] = predict_label_ncd[len(test_targets_available):] >= 0
 
     # Handle the novel cluster manually
     feats_novel = online_feats_osr[mask_novel]
