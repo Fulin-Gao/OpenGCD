@@ -44,6 +44,7 @@ Our code is partially based on the following repositories:
 * [Generalized Category Discovery](https://github.com/sgvaze/generalized-category-discovery)
 * [AutoNovel: Automatically Discovering and Learning Novel Visual Categories](https://github.com/k-han/AutoNovel)
 
+## :memo: Acknowledgement
 ```bibtex
 @article{opengcd2023,
   title={OpenGCD: Assisting Open World Recognition with Generalized Category Discovery},
